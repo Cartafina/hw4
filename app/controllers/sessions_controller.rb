@@ -5,18 +5,25 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by({ "email" => params["email"] })
     if @user
-      if @user["password"] == params["password"]
+      if BCrypt::Password.new(@user["password"]) == params["password"]
+        session["user_id"] = @user["id"]
         # login the user
-        redirect_to "/companies"
+        flash["notice"] = "You've logged in."
+        redirect_to "/places"
       else
-        redirect_to "/sessions/new"
+        flash["notice"] = "Unsuccessful login."
+        redirect_to "/login"
       end
     else
-      redirect_to "/sessions/new"
+      flash["notice"] = "Unsuccessful login."
+      redirect_to "/login"
     end
   end
 
   def destroy
+    session["user_id"] = nil
+    flash["notice"] = "Goodbye."
+    redirect_to "/login"
   end
 end
   
