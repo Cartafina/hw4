@@ -4,9 +4,9 @@
 
   <% if @current_user %>
 
-    <p>
+    <div class="mb-3">
       <a href="/posts/new?place_id=<%= @place["id"] %>" class="btn btn-success">New Post</a>
-    </p>
+    </div>
 
     <div class="row">
       <% for post in @posts %>
@@ -29,7 +29,7 @@
     You must first <a href="/login">login</a> to post.
   <% end %>
 
-  <p>
+  <div class="mb-3">
     <a href="/places">Back to All Places</a>
-  </p>
+  </div>
 </div>
